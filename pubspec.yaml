@@ -43,6 +43,7 @@ dependencies:
   validatorless: ^1.2.3
   fl_chart: ^0.64.0
   flutter_svg: ^2.0.9
+  svg_flutter: ^0.0.1
 
 dev_dependencies:
   flutter_test:

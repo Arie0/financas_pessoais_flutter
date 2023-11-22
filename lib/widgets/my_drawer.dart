@@ -14,7 +14,7 @@ class MyDrawer extends StatelessWidget {
             accountName: Text("Ariele Financas"),
             accountEmail: Text("ariel@gmail.com"),
             currentAccountPicture: CircleAvatar(
-              backgroundImage: AssetImage("assets/images/woman.svg"),
+              backgroundImage: AssetImage("assets/images/woman.png"),
             ),
           ),
           // ElevatedButton(
