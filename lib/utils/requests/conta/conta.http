@@ -10,11 +10,11 @@ Content-Type: application/json
     "categoria": {
         "id": 1
     },
-    "tipo": true,
-    "data": "2023-09-26",
-    "descricao": "Dipirona",
-    "valor": 6.20,
-    "destinoOrigem": "Farmacia do Zé",
+    "tipo": false,
+    "data": "2023-12-30",
+    "descricao": "Higiene",
+    "valor": 250,
+    "destinoOrigem": "Mercado",
     "status": false
 }
 

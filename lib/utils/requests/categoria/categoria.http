@@ -7,7 +7,7 @@ Content-Type: application/json
 
 {
     "id": null,
-    "nome": "FARMACIA"
+    "nome": "Mercado"
 }
 
 ###
@@ -16,5 +16,5 @@ Content-Type: application/json
 
 {
     "id": 1,
-    "nome": "Romildo"
+    "nome": "Higiene"
 }

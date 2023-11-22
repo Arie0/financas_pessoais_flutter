@@ -26,13 +26,13 @@ class MyTheme {
       style: ButtonStyle(
         textStyle: MaterialStatePropertyAll(
           TextStyle(
-            color: MyColors.textLight,
+            color: Color.fromARGB(255, 107, 97, 97),
           ),
         ),
       ),
     ),
     floatingActionButtonTheme: const FloatingActionButtonThemeData(
-        backgroundColor: MyColors.primaryColor),
+        backgroundColor: Color.fromARGB(255, 129, 77, 160)),
   );
 
   static final darkTheme = ThemeData.dark(
