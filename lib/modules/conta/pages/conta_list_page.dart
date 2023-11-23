@@ -1,31 +1,33 @@
-
 import 'package:brasil_fields/brasil_fields.dart';
 import 'package:financas_pessoais_flutter/modules/conta/controllers/conta_controller.dart';
 import 'package:financas_pessoais_flutter/modules/conta/models/ResumoDTO.dart';
 import 'package:financas_pessoais_flutter/modules/conta/models/conta_model.dart';
 import 'package:financas_pessoais_flutter/utils/utils.dart';
-import 'package:fl_chart/fl_chart.dart';
+import 'package:financas_pessoais_flutter/widgets/my_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 class ContaListPage extends StatelessWidget {
   const ContaListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    // final controller = Provider.of<ContaController>(context);
+    final controller = context.watch<ContaController>();
 
-  // final controller = Provider.of<ContaController>(context);
-  final controller = context.watch<ContaController>();
-
-  // final controller = Provider.of<ContaController>(context, listen: false);
-  // final controller = context.read<ContaController>();
+    // final controller = Provider.of<ContaController>(context, listen: false);
+    // final controller = context.read<ContaController>();
 
     return Scaffold(
+      // drawer: const MyDrawer(),
       appBar: AppBar(
         title: const Text('Contas'),
       ),
-      body: FutureBuilder<ResumoDTO?>(
-        future: context.read<ContaController>().findresumo(),
+      body: Column(
+        children: [
+          FutureBuilder<ResumoDTO?>(
+        future: context.read<ContaController>().resumo(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done){
             if (snapshot.hasData ){
@@ -137,12 +139,12 @@ class ContaListPage extends StatelessWidget {
                                           fontWeight: FontWeight.w800,
                                         ),
                                       ),
-                                      Text(data[index].descricao),
+                                      Text(data[index].descricao ?? '-'),
                                       const SizedBox(height: 8,),
                                        Text('Data',style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                           fontWeight: FontWeight.w800,
                                         ),),
-                                      Text(Utils.convertDate(data[index].data)),
+                                      Text(data[index].data == null ?'-': Utils.convertDate(data[index].data!)),
                                     ],
                                   ),
                                   Column(
@@ -158,7 +160,7 @@ class ContaListPage extends StatelessWidget {
                                        Text('Valor',style: Theme.of(context).textTheme.labelSmall?.copyWith(
                                           fontWeight: FontWeight.w800,
                                         ),),
-                                      Text(UtilBrasilFields.obterReal(data[index].valor)),
+                                      Text(data[index].valor == null ? '-':  UtilBrasilFields.obterReal(data[index].valor!)),
                                     ],
                                   ),
                                 ],
@@ -187,49 +189,157 @@ class ContaListPage extends StatelessWidget {
                   }
                  
         }
+      ),
       
-           
-          ),
-                    // Card(
-                    // child: ListTile(
-                    //   title: Text(data[index].descricao),
-                    //   trailing: Row(
-                    //     mainAxisSize: MainAxisSize.min,
-                    //     children: [
-                    //       IconButton(
-                    //         onPressed: ()=>controller.edit(context,data[index]), 
-                    //         icon: const Icon(
-                    //           Icons.edit,
-                    //           color: Colors.amber,
-                    //         ),
-                    //       ),
-                    //       IconButton(
-                    //         onPressed: ()=>controller.delete(data[index]), 
-                    //         icon: const Icon(
-                    //           Icons.delete,
-                    //           color: Colors.red,
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
-                    // ),
-      //           );
-      //         } else {
-      //           return const Center(
-      //             child: Text("Erro ao buscar contas..."),
-      //           );
-      //         }
-      //       } else {
-      //         return const Center(
-      //           child: CircularProgressIndicator(),
-      //         );
-      //       }
-      //     }),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => controller.create(context),
-      //   child: const Icon(Icons.add),
-      // ),
+          FutureBuilder(
+              future: controller.findAll(),
+              builder: (ctx, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.hasData) {
+                    List<Conta> data = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (ctx, index) => InkWell(
+                        onLongPress: () => context
+                            .read<ContaController>()
+                            .edit(context, data[index]),
+                        onDoubleTap: () => showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: Text('Confirmar exclusão?'),
+                            actions: [
+                              TextButton(
+                                  onPressed: () => Navigator.of(context).pop(),
+                                  child: Text('Cancelar')),
+                              TextButton(
+                                  onPressed: () {
+                                    context
+                                        .read<ContaController>()
+                                        .delete(data[index]);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('Confirmar')),
+                            ],
+                          ),
+                        ),
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              color: data[index].tipo == true
+                                  ? Color.fromARGB(128, 236, 96, 96)
+                                  : Color.fromARGB(195, 55, 187, 123),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  blurRadius: 16,
+                                ),
+                              ]),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Descrição',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                  Text(data[index].descricao ?? '-'),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Data',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                  Text(data[index].data == null ? '-': Utils.convertDate(data[index].data!)),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    'Lançamento',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                  Text(data[index].createdAt == null
+                                      ? ''
+                                      : Utils.convertDate(data[index].createdAt!)),
+                                  const SizedBox(height: 8),
+                                  Text(
+                                    'Valor',
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          fontWeight: FontWeight.w800,
+                                        ),
+                                  ),
+                                  Text(
+                                      data[index].valor == null ? '-': UtilBrasilFields.obterReal(data[index].valor!)),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Card(
+                      //   child: ListTile(
+                      //     title: Text(data[index].descricao),
+                      //     trailing: Row(
+                      //       mainAxisSize: MainAxisSize.min,
+                      //       children: [
+                      //         IconButton(
+                      //           onPressed: () =>
+                      //               controller.edit(context, data[index]),
+                      //           icon: const Icon(
+                      //             Icons.edit,
+                      //             color: Colors.amber,
+                      //           ),
+                      //         ),
+                      //         IconButton(
+                      //           onPressed: () => controller.delete(data[index]),
+                      //           icon: const Icon(
+                      //             Icons.delete,
+                      //             color: Colors.red,
+                      //           ),
+                      //         )
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                    );
+                  } else {
+                    return const Center(
+                      child: Text("Erro ao buscar contas..."),
+                    );
+                  }
+                } else {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+              }),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => controller.create(context),
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

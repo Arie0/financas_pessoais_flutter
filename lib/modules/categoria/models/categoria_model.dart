@@ -1,13 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:financas_pessoais_flutter/modules/abstract/models/abstract_entity_model.dart';
+import 'package:objectbox/objectbox.dart';
 
-class Categoria extends AbstractEntity {
-  String nome;
+@Entity()
+class Categoria  {
+    @Id()
+    int? id;
+    String? createdAt;
+    String? updatedAt;
+    String? nome;
 
   Categoria({
-    required this.nome,
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.nome,
   });
 
 @override
@@ -18,9 +26,5 @@ class Categoria extends AbstractEntity {
     };
   }
 
-  factory Categoria.fromMap(Map<String, dynamic> map) {
-    return Categoria(
-      nome: map['nome'] as String,
-    )..id = map['id'] == null ? null : map['id'] as int;
-  }
+
 }

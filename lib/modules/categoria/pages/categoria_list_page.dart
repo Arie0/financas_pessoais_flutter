@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:financas_pessoais_flutter/modules/categoria/controllers/categoria_controller.dart';
 import 'package:financas_pessoais_flutter/modules/categoria/models/categoria_model.dart';
-import 'package:financas_pessoais_flutter/modules/categoria/repository/categoria_repository.dart';
 import 'package:financas_pessoais_flutter/utils/back_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -34,7 +33,7 @@ class CategoriaListPage extends StatelessWidget {
                   itemCount: data.length,
                   itemBuilder: (ctx, index) => Card(
                     child: ListTile(
-                      title: Text(data[index].nome),
+                      title: Text(data[index].nome ?? '-'),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [

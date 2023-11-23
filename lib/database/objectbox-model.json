@@ -1,0 +1,109 @@
+{
+  "_note1": "KEEP THIS FILE! Check it into a version control system (VCS) like git.",
+  "_note2": "ObjectBox manages crucial IDs for your object model. See docs for details.",
+  "_note3": "If you have VCS merge conflicts, you must resolve them according to ObjectBox docs.",
+  "entities": [
+    {
+      "id": "1:6713924540300577398",
+      "lastPropertyId": "10:1254853514290833094",
+      "name": "Conta",
+      "properties": [
+        {
+          "id": "1:2913050156717465564",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:2407629346884848813",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "3:5712599778121782645",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "4:111700996256364519",
+          "name": "tipo",
+          "type": 1
+        },
+        {
+          "id": "5:6529451589641933044",
+          "name": "data",
+          "type": 9
+        },
+        {
+          "id": "6:8325752201588832447",
+          "name": "descricao",
+          "type": 9
+        },
+        {
+          "id": "7:786987194844571481",
+          "name": "valor",
+          "type": 8
+        },
+        {
+          "id": "8:5222708763305473507",
+          "name": "destinoOrigem",
+          "type": 9
+        },
+        {
+          "id": "9:8521406867462290911",
+          "name": "status",
+          "type": 1
+        },
+        {
+          "id": "10:1254853514290833094",
+          "name": "categoriaId",
+          "type": 11,
+          "flags": 520,
+          "indexId": "1:7090237516223971091",
+          "relationTarget": "Categoria"
+        }
+      ],
+      "relations": []
+    },
+    {
+      "id": "2:2338236582002801679",
+      "lastPropertyId": "4:6060168099289630175",
+      "name": "Categoria",
+      "properties": [
+        {
+          "id": "1:432541558396201089",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:5868671723142954166",
+          "name": "createdAt",
+          "type": 9
+        },
+        {
+          "id": "3:413966084465106522",
+          "name": "updatedAt",
+          "type": 9
+        },
+        {
+          "id": "4:6060168099289630175",
+          "name": "nome",
+          "type": 9
+        }
+      ],
+      "relations": []
+    }
+  ],
+  "lastEntityId": "2:2338236582002801679",
+  "lastIndexId": "1:7090237516223971091",
+  "lastRelationId": "0:0",
+  "lastSequenceId": "0:0",
+  "modelVersion": 5,
+  "modelVersionParserMinimum": 5,
+  "retiredEntityUids": [],
+  "retiredIndexUids": [],
+  "retiredPropertyUids": [],
+  "retiredRelationUids": [],
+  "version": 1
+}
